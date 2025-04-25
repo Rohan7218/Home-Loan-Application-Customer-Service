@@ -25,14 +25,14 @@ public class CustomerServiceImpl implements CustomerService
 						   cibilDetails.setCibilEligibility(customerDetails.getCibilId().getCibilEligibility());
 						   cibilDetails.setCibilScore(customerDetails.getCibilId().getCibilScore());
 						   cibilDetails.setCibilRemark(customerDetails.getCibilId().getCibilRemark());
-						   cibilDetails.setPanCardNo(customerDetails.getPanCardNo());
-						   
+						   cibilDetails.setPanCardNo(customerDetails.getPanCardNo()); 
+						   				   
 		customerDetails.setCibilId(cibilDetails);
+						   
 		 CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
 		 cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
 		 customerRepository.save(customerDetailsSaved);
-		 
-								  
+							  
 		return "!!!!....Customer Saved SuccessFully....!!!!";
 	}
 }
