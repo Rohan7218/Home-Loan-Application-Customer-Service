@@ -38,7 +38,7 @@ public class CustomerDetails
 	
 	@Column(name = "Last_Name")
 	private String lastName;
-
+	
 	@Column(name = "Email_Id")
 	private String emailId;
 
@@ -62,4 +62,44 @@ public class CustomerDetails
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_Cibil_Id")
 	private CibilDetails cibilId;
+	
+//=========================================================================
+	//Additional added Fields.
+	
+	@Column(name = "Existing_Customer")
+	private String existingCustomer;  		//Enum
+	
+	@Column(name = "Middle_Name")
+	private String middleName;
+	
+	@Column(name = "Date_Of_Birth")
+	private LocalDate dateOfBirth;
+	
+	@Column(name = "Age")
+	private Integer age;
+	
+	@Column(name = "Gender")
+	private Integer gender;                    //Enum                              
+	
+	@Column(name = "Alternativer_Contact_no")
+	private Long alternateContactNumber;
+	
+	@Column(name="AadharCard_Number")
+	private String aadharNo;
+	
+	@Column(name="VoterId_Number")
+	private String votelIdNo;
+	
+	@Column(name = "Passport_Number")
+	private String passportNo;
+	
+	@Column(name = "Driving_License_Number")
+	private String drivingLicenseNo;
+	
+	@Column(name="Marital_Status")
+	private String maritalStatus;            //Enum
+	
+	
+	
+	
 }
