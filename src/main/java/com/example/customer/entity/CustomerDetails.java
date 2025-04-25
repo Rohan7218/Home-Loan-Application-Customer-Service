@@ -16,6 +16,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.example.customer.dto.CustomerGenderEnum;
+import com.example.customer.dto.CustomerMaritalStatus;
+import com.example.customer.dto.ExistingCustomerEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,7 +74,7 @@ public class CustomerDetails
 	//Additional added Fields.
 	
 	@Column(name = "Existing_Customer")
-	private String existingCustomer;  		//Enum
+	private ExistingCustomerEnum existingCustomer;  		//Enum
 	
 	@Column(name = "Date_Of_Birth")
 	private LocalDate dateOfBirth;
@@ -79,7 +83,7 @@ public class CustomerDetails
 	private Integer age;
 	
 	@Column(name = "Gender")
-	private Integer gender;                    //Enum                              
+	private CustomerGenderEnum gender;                    //Enum                              
 	
 	@Column(name = "Alternativer_Contact_no")
 	private Long alternateContactNumber;
@@ -97,7 +101,7 @@ public class CustomerDetails
 	private String drivingLicenseNo;
 	
 	@Column(name="Marital_Status")
-	private String maritalStatus;            //Enum
+	private CustomerMaritalStatus maritalStatus;            //Enum
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_Dependent_InfoId")
