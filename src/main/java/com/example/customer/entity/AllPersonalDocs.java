@@ -24,10 +24,10 @@ import lombok.NoArgsConstructor;
 public class AllPersonalDocs {
 
 	@Id
-	@Column(name = "documentId")
-	@SequenceGenerator(name = "Customer_DocumentId",sequenceName = "Customer_DocumentId",allocationSize = 1,initialValue = 101)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="Customer_DocumentId" )
-	private Integer documentId;
+	@SequenceGenerator(name = "Customer_Personal_DocumentId",sequenceName = "Customer_Personal_DocumentId",allocationSize = 1,initialValue = 101)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="Customer_Personal_DocumentId" )
+	@Column(name = "Customer_Personal_DocumentId")
+	private Integer personalDocumentId;
 	
 	@Column(name = "AddressProof")
 	@Lob
