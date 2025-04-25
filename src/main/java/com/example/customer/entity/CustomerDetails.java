@@ -36,6 +36,9 @@ public class CustomerDetails
 	@Column(name = "First_Name")
 	private String firstName;
 	
+	@Column(name = "Middle_Name")
+	private String middleName;
+	
 	@Column(name = "Last_Name")
 	private String lastName;
 	
@@ -69,9 +72,6 @@ public class CustomerDetails
 	@Column(name = "Existing_Customer")
 	private String existingCustomer;  		//Enum
 	
-	@Column(name = "Middle_Name")
-	private String middleName;
-	
 	@Column(name = "Date_Of_Birth")
 	private LocalDate dateOfBirth;
 	
@@ -98,6 +98,22 @@ public class CustomerDetails
 	
 	@Column(name="Marital_Status")
 	private String maritalStatus;            //Enum
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_Dependent_InfoId")
+	private DependentInfo dependentInfoId;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_Personal_DocumentId")
+	private AllPersonalDocs personalDocumentId;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_AddressId")
+	private CustomerAddress customerAddressId;
+	
+	
+	
+	
 	
 	
 	
