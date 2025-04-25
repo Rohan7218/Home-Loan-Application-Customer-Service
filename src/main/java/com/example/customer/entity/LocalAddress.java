@@ -1,5 +1,6 @@
 package com.example.customer.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,13 +25,28 @@ public class LocalAddress
 	@Id
 	@SequenceGenerator(name = "Local_AddressId",sequenceName = "Local_AddressId",allocationSize = 1,initialValue = 101)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="Local_AddressId" )
+	@Column(name = "Local_Address_ID")
 	private Integer localAddressId;
-	private String areaname;
-	private String cityname;
-	private String district;
-	private String state;
-	private Integer pincode;
-	private Integer houseNumber;
-	private String streetName;
+	
+	@Column(name = "Local_Areaname")
+	private String localAreaname;
+	
+	@Column(name = "Local_Cityname")
+	private String localCityname;
+	
+	@Column(name = "Local_District")
+	private String localDistrict;
+	
+	@Column(name = "Local_State")
+	private String localState;
+	
+	@Column(name = "Local_Pincode")
+	private Integer localPincode;
+	
+	@Column(name = "Local_Housenumber")
+	private Integer localHouseNumber;
+	
+	@Column(name = "Local_Streetname")
+	private String localStreetName;
 
 }
