@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -73,6 +75,7 @@ public class CustomerDetails
 //=========================================================================
 	//Additional added Fields.
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "Existing_Customer")
 	private ExistingCustomerEnum existingCustomer;  		//Enum
 	
@@ -82,6 +85,7 @@ public class CustomerDetails
 	@Column(name = "Age")
 	private Integer age;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "Gender")
 	private CustomerGenderEnum gender;                    //Enum                              
 	
@@ -92,7 +96,7 @@ public class CustomerDetails
 	private String aadharNo;
 	
 	@Column(name="VoterId_Number")
-	private String votelIdNo;
+	private String voterIdNo;
 	
 	@Column(name = "Passport_Number")
 	private String passportNo;
@@ -100,6 +104,7 @@ public class CustomerDetails
 	@Column(name = "Driving_License_Number")
 	private String drivingLicenseNo;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="Marital_Status")
 	private CustomerMaritalStatus maritalStatus;            //Enum
 	
