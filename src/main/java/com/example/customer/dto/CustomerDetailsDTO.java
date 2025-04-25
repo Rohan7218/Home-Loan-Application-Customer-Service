@@ -1,7 +1,5 @@
 package com.example.customer.dto;
 
-import javax.persistence.Column;
-
 import lombok.Data;
 
 @Data
