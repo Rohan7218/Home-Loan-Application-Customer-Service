@@ -1,12 +1,21 @@
 package com.example.customer.serviceimpl;
 
+import java.io.IOException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.entity.AllPersonalDocs;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
+
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerDetails;
+import com.example.customer.repository.AllPersonalDocsRepository;
 import com.example.customer.repository.CustomerRepository;
 import com.example.customer.service.CustomerService;
 
@@ -15,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	@Autowired
+	private AllPersonalDocsRepository allPersonalDocsRepository;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -34,6 +46,36 @@ public class CustomerServiceImpl implements CustomerService {
 
 		return "!!!!....Customer Saved SuccessFully....!!!!";
 	}
+
+	
+	
+	@Override
+	public String uploadDocuments(CustomerDocumentDTO customerDocumentDTO) {
+		AllPersonalDocs allPersonalDocs = modelMapper.map(customerDocumentDTO, AllPersonalDocs.class);
+		try {
+				allPersonalDocs.setAddressProof(customerDocumentDTO.getAddressProof().getBytes());
+				allPersonalDocs.setAdharCard(customerDocumentDTO.getAdharCard().getBytes());
+				allPersonalDocs.setIncomeTax(customerDocumentDTO.getIncomeTax().getBytes());
+				allPersonalDocs.setPanCard(customerDocumentDTO.getPanCard().getBytes());
+				allPersonalDocs.setPassportPhoto(customerDocumentDTO.getPassportPhoto().getBytes());
+				allPersonalDocs.setSalarySlips(customerDocumentDTO.getSalarySlips().getBytes());
+				allPersonalDocs.setSignature(customerDocumentDTO.getSignature().getBytes());
+			
+				allPersonalDocsRepository.save(allPersonalDocs);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "Document Upload Succesfully";
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO,
@@ -60,4 +102,5 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return "Customer Id Not Exist given ID " + customerId  ;
 	}
+
 }
