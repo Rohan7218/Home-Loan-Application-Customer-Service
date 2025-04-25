@@ -24,7 +24,7 @@ public class DependentInfo {
 	@Id
 	@SequenceGenerator(name = "Dependent_InfoId", sequenceName = "Dependent_InfoId", allocationSize = 1, initialValue =101)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Dependent_InfoId")
-	@Column(name = "Dependent_Info_Id")
+	@Column(name = "Customer_Dependent_InfoId")
 	private Integer dependentInfoId;
 	
 	@Column(name = "No_Of_Family_Member")
