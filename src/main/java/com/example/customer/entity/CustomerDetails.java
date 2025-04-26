@@ -110,7 +110,7 @@ public class CustomerDetails
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_AccountDetails_Id")
-	private AccountDetails accountDetails;
+	private BankAccountDetails accountId;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_Personal_DocumentId")
