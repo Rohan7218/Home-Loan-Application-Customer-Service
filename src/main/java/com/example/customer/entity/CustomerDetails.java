@@ -109,8 +109,8 @@ public class CustomerDetails
 	private CustomerMaritalStatus maritalStatus;            //Enum
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "Customer_Dependent_InfoId")
-	private DependentInfo dependentInfoId;
+	@JoinColumn(name = "Customer_AccountDetails_Id")
+	private AccountDetails accountDetails;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_Personal_DocumentId")
@@ -119,6 +119,8 @@ public class CustomerDetails
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_AddressId")
 	private CustomerAddress customerAddressId;
+	
+	
 	
 	
 	

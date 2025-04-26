@@ -30,20 +30,23 @@ public class AddressServiceImpl implements AddressService{
 	
 	
 	@Override
-	public String addAddress(AddressDTO addressDTO) {
-		
-		LocalAddress localAddress = modelMapper.map(addressDTO, LocalAddress.class);
-		
-		PermanentAddress permanentAddress = modelMapper.map(addressDTO, PermanentAddress.class);
-		
-		CustomerAddress customerAddress=new CustomerAddress();
-		customerAddress.setLocalAddressId(localAddress);
-		customerAddress.setPermanentAddressId(permanentAddress);
-		customerAddressRepository.save(customerAddress);
-		
-	
-	
-		return "Address Saved Succesfully";
+	public String addAddress(AddressDTO addressDTO, Integer addressId)
+	{
+		if(customerAddressRepository.findById(addressId).isPresent())
+		{
+			LocalAddress localAddress = modelMapper.map(addressDTO, LocalAddress.class);
+			
+			PermanentAddress permanentAddress = modelMapper.map(addressDTO, PermanentAddress.class);
+			
+			CustomerAddress customerAddress=new CustomerAddress();
+										customerAddress.setLocalAddressId(localAddress);
+										customerAddress.setPermanentAddressId(permanentAddress);
+										customerAddress.setAddressId(addressId);
+										
+			customerAddressRepository.save(customerAddress);
+			return "Address Saved Succesfully";
+		}
+			return null;
 	}
 	
 }
