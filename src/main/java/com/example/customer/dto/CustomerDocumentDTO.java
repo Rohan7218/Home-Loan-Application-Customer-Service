@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class CustomerDocumentDTO {
 
-	
 	private MultipartFile addressProof;
 	
 	private MultipartFile panCard;
