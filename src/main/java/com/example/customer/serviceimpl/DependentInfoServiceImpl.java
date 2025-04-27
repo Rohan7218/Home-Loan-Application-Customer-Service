@@ -32,13 +32,8 @@ public class DependentInfoServiceImpl implements DependentInfoService
 			dependentInfoRepository.save(dependentInfo);
 			
 			return "!!!!....Dependent Info Saved SuccessFully....!!!!";
-//			
-//			
-//			DependentInfo dependentInfo = modelMapper.map(dependentInfoDTO, DependentInfo.class);
-//									 dependentInfo.setDependentInfoId(dependedntInfoId);
-//									 dependentInfo.setCustomerId(customerDetails);
-//									 
-//			
+			
+			
 		}
 		
 		

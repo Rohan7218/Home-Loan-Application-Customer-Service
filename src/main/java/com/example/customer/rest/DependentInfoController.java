@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customer.dto.DependentInfoDTO;
-import com.example.customer.entity.CustomerDetails;
 import com.example.customer.service.DependentInfoService;
 
 @RestController
