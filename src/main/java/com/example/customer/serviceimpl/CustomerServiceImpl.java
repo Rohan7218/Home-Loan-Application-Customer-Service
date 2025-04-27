@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.dto.CustomerStatusEnum;
 import com.example.customer.entity.AllPersonalDocs;
 import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
@@ -44,7 +45,9 @@ public class CustomerServiceImpl implements CustomerService
 		customerDetails.setCibilId(cibilDetails);
 
 		CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
-		cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  customerDetailsSaved.setCustomerStatus(CustomerStatusEnum.INPROCESS);
+								  cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  
 		customerRepository.save(customerDetailsSaved);
 
 		return "!!!!....Customer Saved SuccessFully....!!!!";
