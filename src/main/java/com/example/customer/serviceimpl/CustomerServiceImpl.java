@@ -8,8 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
+
+import com.example.customer.dto.CustomerStatusEnum;
+
 import com.example.customer.entity.AllPersonalDocs;
+import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerAddress;
 import com.example.customer.entity.CustomerDetails;
@@ -44,7 +49,9 @@ public class CustomerServiceImpl implements CustomerService
 		customerDetails.setCibilId(cibilDetails);
 
 		CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
-		cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  customerDetailsSaved.setCustomerStatus(CustomerStatusEnum.INPROCESS);
+								  cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  
 		customerRepository.save(customerDetailsSaved);
 
 		return "!!!!....Customer Saved SuccessFully....!!!!";
@@ -91,6 +98,7 @@ public class CustomerServiceImpl implements CustomerService
 		{
 			CustomerAddress customerAddress=new CustomerAddress();
 			AllPersonalDocs allPersonalDocs=new AllPersonalDocs();
+			BankAccountDetails bankAccountDetails=new BankAccountDetails();
 			
 			CustomerDetails customerDetails = customerRepository.findById(customerId).get();
 									  customerDetails.setAadharNo(additionalCustomerDetailsDTO.getAadharNo());
@@ -106,6 +114,7 @@ public class CustomerServiceImpl implements CustomerService
 									  customerDetails.setVoterIdNo(additionalCustomerDetailsDTO.getVoterIdNo());
 									  customerDetails.setCustomerAddressId(customerAddress);
 									  customerDetails.setPersonalDocumentId(allPersonalDocs);
+									  customerDetails.setAccountId(bankAccountDetails);
 			
 									  customerRepository.save(customerDetails);
 									  
