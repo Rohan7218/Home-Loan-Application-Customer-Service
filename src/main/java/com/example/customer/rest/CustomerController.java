@@ -18,7 +18,7 @@ import com.example.customer.entity.CustomerDetails;
 import com.example.customer.service.CustomerService;
 
 @RestController
-@RequestMapping(value = "/api/customer")
+@RequestMapping(value = "/api/customers")
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
@@ -30,11 +30,11 @@ public class CustomerController {
 	}
 
 
-	@PostMapping(value = "/documents")
-	public ResponseEntity<String> uploadDocuments(@ModelAttribute CustomerDocumentDTO customerDocumentDTO)
+	@PostMapping(value = "/documents/{personalDocumentId}")
+	public ResponseEntity<String> uploadDocuments(@ModelAttribute CustomerDocumentDTO customerDocumentDTO, @PathVariable Integer personalDocumentId)
 	{
-		String msg=customerService.uploadDocuments(customerDocumentDTO);
-		return new ResponseEntity<String>(msg, HttpStatus.OK);
+		String msg=customerService.uploadDocuments(customerDocumentDTO, personalDocumentId);
+		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
 	}
 
 

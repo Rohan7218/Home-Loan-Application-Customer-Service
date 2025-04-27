@@ -11,7 +11,7 @@ public interface CustomerService {
 	String addCustomer(CustomerDetails customerDetails);
 
 
-	String uploadDocuments(CustomerDocumentDTO customerDocumentDTO);
+	String uploadDocuments(CustomerDocumentDTO customerDocumentDTO, Integer personalDocumentId);
 
 	
 
