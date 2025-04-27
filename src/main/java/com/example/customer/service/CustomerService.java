@@ -4,12 +4,9 @@ package com.example.customer.service;
 
 import java.util.List;
 
-
-import com.example.customer.dto.CustomerDocumentDTO;
-import com.example.customer.dto.UpdateCustomerDetailsDTO;
-
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
 import com.example.customer.entity.CustomerDetails;
 
@@ -21,8 +18,6 @@ public interface CustomerService {
 
 	String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO , Integer customerId);
 
-	
-	String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO , Integer customerId);
 
 
 	String updateCustomerDetails(UpdateCustomerDetailsDTO updateCustomerDetailsDTO, Integer customerId);
