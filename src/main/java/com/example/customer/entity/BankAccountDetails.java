@@ -1,7 +1,5 @@
 package com.example.customer.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,9 +13,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.example.customer.dto.AccountTypeEnum;
-import com.example.customer.dto.CustomerGenderEnum;
-import com.example.customer.dto.CustomerMaritalStatus;
-import com.example.customer.dto.ExistingCustomerEnum;
 import com.example.customer.dto.accountStatusEnum;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Customer_Account_Details")
-public class AccountDetails 
+public class BankAccountDetails 
 {
 	@Id
 	@SequenceGenerator(name = "Customer_Account_Id", sequenceName = "Customer_Account_Id", allocationSize = 1, initialValue =101)
