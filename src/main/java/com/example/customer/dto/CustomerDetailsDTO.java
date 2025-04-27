@@ -1,15 +1,11 @@
 package com.example.customer.dto;
 
-import javax.persistence.Column;
-
 import lombok.Data;
 
 @Data
 public class CustomerDetailsDTO
 {
-	private String firstName;
-	
-	private String lastName;
+
 
 	private String emailId;
 
