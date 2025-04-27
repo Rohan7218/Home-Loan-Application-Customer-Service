@@ -5,12 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customer.dto.DependentInfoDTO;
-import com.example.customer.entity.CustomerDetails;
+import com.example.customer.dto.UpdateDepedentInfoDTO;
 import com.example.customer.service.DependentInfoService;
 
 @RestController
@@ -26,5 +27,13 @@ public class DependentInfoController
 		String msg=dependentInfoService.addDependentInfo(dependentInfoDTO, customerId);
 		
 		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
+	}
+	
+	
+	@PutMapping(value = "/dependents/{dependentInfoId}")
+	public ResponseEntity<String> updateDepedentInfoDetails(@RequestBody UpdateDepedentInfoDTO updateDepedentInfoDTO,@PathVariable Integer dependentInfoId) 
+	{
+		String msg=dependentInfoService.updateDepedentInfoDetails(updateDepedentInfoDTO,dependentInfoId);
+		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 }
