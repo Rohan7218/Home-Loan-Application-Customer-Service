@@ -73,14 +73,6 @@ public class CustomerController {
 		}
 	}
 	
-	@PostMapping(value = "/addAdditionalDetails/{customerId}")
-	public ResponseEntity<String> addAdditionalCustomerDetails(@RequestBody @Valid AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO, @PathVariable Integer customerId){
-		
-		String msg = customerService. addAdditionalCustomerDetails(additionalCustomerDetailsDTO , customerId);
-		return new ResponseEntity<String>(msg, HttpStatus.CREATED);	
-	}
-	
-	
 	@PutMapping(value = "/updateCustomerDetails/{customerId}")
 	public ResponseEntity<String> updateCustomerDetails(@RequestBody UpdateCustomerDetailsDTO updateCustomerDetailsDTO,@PathVariable Integer customerId)
 	{
