@@ -9,18 +9,27 @@ import org.springframework.stereotype.Service;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+
 import com.example.customer.dto.getCustomerDetailsDTO;
+
+
+import com.example.customer.dto.UpdateCustomerDetailsDTO;
+
+import com.example.customer.dto.CustomerStatusEnum;
+
+
 import com.example.customer.entity.AllPersonalDocs;
 import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerAddress;
 import com.example.customer.entity.CustomerDetails;
+
 import com.example.customer.entity.DependentInfo;
 import com.example.customer.exceptionhandling.NoCustomerFoundException;
 import com.example.customer.exceptionhandling.NoCustomersFoundException;
+
 import com.example.customer.repository.AllPersonalDocsRepository;
 import com.example.customer.repository.CustomerRepository;
-import com.example.customer.repository.DependentInfoRepository;
 import com.example.customer.service.CustomerService;
 
 @Service
@@ -45,7 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDetails.setCibilId(cibilDetails);
 
 		CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
-		cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  customerDetailsSaved.setCustomerStatus(CustomerStatusEnum.INPROCESS);
+								  cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  
 		customerRepository.save(customerDetailsSaved);
 
 		return "!!!!....Customer Saved SuccessFully....!!!!";
@@ -132,5 +143,73 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 	
 	}
+	
+	
+	@Override
+	public String updateCustomerDetails(UpdateCustomerDetailsDTO updateCustomerDetailsDTO, Integer customerId) {
+		
+		if(customerRepository.existsById(customerId))
+		{
+			CustomerDetails existCustomerDetails = customerRepository.findById(customerId).get();
+			
+			if(updateCustomerDetailsDTO.getFirstName()!=null)
+			{
+				existCustomerDetails.setFirstName(updateCustomerDetailsDTO.getFirstName());
+			}
+			if(updateCustomerDetailsDTO.getMiddleName()!=null)
+			{
+				existCustomerDetails.setMiddleName(updateCustomerDetailsDTO.getMiddleName());;
+			}
+			
+			if(updateCustomerDetailsDTO.getLastName()!=null)
+			{
+				existCustomerDetails.setLastName(updateCustomerDetailsDTO.getLastName());
+			}
+			
+			if(updateCustomerDetailsDTO.getContactNo()!=null)
+			{
+				existCustomerDetails.setContactNo(updateCustomerDetailsDTO.getContactNo());
+			}
+			if(updateCustomerDetailsDTO.getAlternateContactNumber()!=null)
+			{
+				existCustomerDetails.setAlternateContactNumber(updateCustomerDetailsDTO.getAlternateContactNumber());
+			}
+			if(updateCustomerDetailsDTO.getEmailId()!=null)
+			{
+				existCustomerDetails.setEmailId(updateCustomerDetailsDTO.getEmailId());
+			}
+			if(updateCustomerDetailsDTO.getMaritalStatus()!=null)
+			{
+				existCustomerDetails.setMaritalStatus(updateCustomerDetailsDTO.getMaritalStatus());
+			}
+			if(updateCustomerDetailsDTO.getDateOfBirth()!=null)
+			{
+				existCustomerDetails.setDateOfBirth(updateCustomerDetailsDTO.getDateOfBirth());
+			}
+			if(updateCustomerDetailsDTO.getAge()!=null)
+			{
+				existCustomerDetails.setAge(updateCustomerDetailsDTO.getAge());
+			}
+			
+			if(updateCustomerDetailsDTO.getCityName()!=null)
+			{
+				existCustomerDetails.setCityName(updateCustomerDetailsDTO.getCityName());
+			}
+			
+			
+			customerRepository.save(existCustomerDetails);
+			return "Customer Details Updated Succesfully for that CustomerId"+customerId;
+		}
+	
+		return "Record Not Found for this customerID"+customerId;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

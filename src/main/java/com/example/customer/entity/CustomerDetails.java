@@ -20,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.customer.dto.CustomerGenderEnum;
 import com.example.customer.dto.CustomerMaritalStatus;
+import com.example.customer.dto.CustomerStatusEnum;
 import com.example.customer.dto.ExistingCustomerEnum;
 
 import lombok.AllArgsConstructor;
@@ -78,6 +79,10 @@ public class CustomerDetails
 	@Enumerated(EnumType.STRING)
 	@Column(name = "Existing_Customer")
 	private ExistingCustomerEnum existingCustomer;  		//Enum
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "Customer_Status")
+	private CustomerStatusEnum customerStatus;
 	
 	@Column(name = "Date_Of_Birth")
 	private LocalDate dateOfBirth;
