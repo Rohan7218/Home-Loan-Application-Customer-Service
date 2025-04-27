@@ -13,10 +13,8 @@ import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerAddress;
 import com.example.customer.entity.CustomerDetails;
-import com.example.customer.entity.DependentInfo;
 import com.example.customer.repository.AllPersonalDocsRepository;
 import com.example.customer.repository.CustomerRepository;
-import com.example.customer.repository.DependentInfoRepository;
 import com.example.customer.service.CustomerService;
 
 @Service
