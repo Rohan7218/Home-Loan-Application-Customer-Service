@@ -4,36 +4,32 @@ import java.io.IOException;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
-
-import com.example.customer.dto.getCustomerDetailsDTO;
-
-
-import com.example.customer.dto.UpdateCustomerDetailsDTO;
-
 import com.example.customer.dto.CustomerStatusEnum;
-
-
+import com.example.customer.dto.UpdateCustomerDetailsDTO;
+import com.example.customer.dto.getCustomerDetailsDTO;
 import com.example.customer.entity.AllPersonalDocs;
 import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerAddress;
 import com.example.customer.entity.CustomerDetails;
-
-import com.example.customer.entity.DependentInfo;
 import com.example.customer.exceptionhandling.NoCustomerFoundException;
 import com.example.customer.exceptionhandling.NoCustomersFoundException;
-
 import com.example.customer.repository.AllPersonalDocsRepository;
 import com.example.customer.repository.CustomerRepository;
 import com.example.customer.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	
+	private static final Logger LOGGER=LoggerFactory.getLogger(CustomerServiceImpl.class);
+	
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -45,6 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public String addCustomer(CustomerDetails customerDetails) {
+		
+		LOGGER.debug("CustomerServiceImpl : addCustomer : Entry");
 		CibilDetails cibilDetails = new CibilDetails();
 		cibilDetails.setCibilEligibility(customerDetails.getCibilId().getCibilEligibility());
 		cibilDetails.setCibilScore(customerDetails.getCibilId().getCibilScore());
@@ -59,12 +57,15 @@ public class CustomerServiceImpl implements CustomerService {
 								  
 		customerRepository.save(customerDetailsSaved);
 
+		LOGGER.debug("CustomerServiceImpl : addCustomer : Exit");
 		return "!!!!....Customer Saved SuccessFully....!!!!";
 	}
 
 	@Override
 	public String uploadDocuments(CustomerDocumentDTO customerDocumentDTO, Integer personalDocumentId) {
-		if (allPersonalDocsRepository.findById(personalDocumentId).isPresent()) {
+		if (allPersonalDocsRepository.findById(personalDocumentId).isPresent()) 
+		{
+			LOGGER.debug("CustomerServiceImpl : uploadDocuments : Entry");
 			AllPersonalDocs allPersonalDocs = modelMapper.map(customerDocumentDTO, AllPersonalDocs.class);
 			allPersonalDocs.setPersonalDocumentId(personalDocumentId);
 			try {
@@ -82,8 +83,10 @@ public class CustomerServiceImpl implements CustomerService {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			LOGGER.debug("CustomerServiceImpl : uploadDocuments : Exit");
 			return "Document Upload Succesfully";
 		}
+		LOGGER.debug("CustomerServiceImpl : uploadDocuments : Exit");
 		return null;
 
 	}
@@ -92,7 +95,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO,
 			Integer customerId) {
 
-		if (customerRepository.findById(customerId).isPresent()) {
+		if (customerRepository.findById(customerId).isPresent())
+		{
+			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Entry");
 			CustomerAddress customerAddress = new CustomerAddress();
 			AllPersonalDocs allPersonalDocs = new AllPersonalDocs();
 			BankAccountDetails bankAccountDetails = new BankAccountDetails();
@@ -114,20 +119,25 @@ public class CustomerServiceImpl implements CustomerService {
 			customerDetails.setAccountId(bankAccountDetails);
 
 			customerRepository.save(customerDetails);
-
+			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
 			return "Additional Customer Details Added Successfully";
 		}
+		LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
 		return "Customer Id Not Exist given ID " + customerId;
 	}
 
 	@Override
 	public getCustomerDetailsDTO getCustomerDetails(Integer customerId) {
 
-		if (customerRepository.findById(customerId).isPresent()) {
+		if (customerRepository.findById(customerId).isPresent()) 
+		{
+			LOGGER.debug("CustomerServiceImpl : getCustomerDetails : Entry");
 			CustomerDetails customerDetails = customerRepository.findById(customerId).get();
 			getCustomerDetailsDTO getCustomer = modelMapper.map(customerDetails, getCustomerDetailsDTO.class);
+			LOGGER.debug("CustomerServiceImpl : getCustomerDetails : Exit");
 			return getCustomer;
 		}else {
+			LOGGER.debug("CustomerServiceImpl : getCustomerDetails : Exit");
 			 throw new NoCustomerFoundException("!!!!....For Given Customer Id Record Not Found....!!!!");
 		}
 	}
@@ -135,10 +145,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<CustomerDetails> getAllCustomerDetails() {
 		
+		LOGGER.debug("CustomerServiceImpl : getAllCustomerDetails : Entry");
 			List<CustomerDetails> getAllCustomerDetails = customerRepository.findAll();
 			if(!getAllCustomerDetails.isEmpty()) {
+				LOGGER.debug("CustomerServiceImpl : getAllCustomerDetails : Exit");
 				return getAllCustomerDetails;
 			}else {
+				LOGGER.debug("CustomerServiceImpl : getAllCustomerDetails : Exit");
 				throw new NoCustomersFoundException("!!!!....No Customers Are Available....!!!!");
 			}
 	
@@ -150,6 +163,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		if(customerRepository.existsById(customerId))
 		{
+			LOGGER.debug("CustomerServiceImpl : updateCustomerDetails : Entry");
 			CustomerDetails existCustomerDetails = customerRepository.findById(customerId).get();
 			
 			if(updateCustomerDetailsDTO.getFirstName()!=null)
@@ -198,9 +212,10 @@ public class CustomerServiceImpl implements CustomerService {
 			
 			
 			customerRepository.save(existCustomerDetails);
+			LOGGER.debug("CustomerServiceImpl : updateCustomerDetails : Exit");
 			return "Customer Details Updated Succesfully for that CustomerId"+customerId;
 		}
-	
+		LOGGER.debug("CustomerServiceImpl : updateCustomerDetails : Exit");
 		return "Record Not Found for this customerID"+customerId;
 	}
 	

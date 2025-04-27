@@ -1,5 +1,7 @@
 package com.example.customer.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import com.example.customer.service.AddressService;
 @RequestMapping(value = "/api/customers")
 public class AddressController {
 	
+	private static final Logger LOGGER=LoggerFactory.getLogger(AddressController.class);
+
+	
 	@Autowired
 	private AddressService addressService; 
 	
@@ -25,14 +30,18 @@ public class AddressController {
 	@PostMapping(value = "/address/{addressId}")
 	public ResponseEntity<String>addAddress(@RequestBody AddressDTO addressDTO, @PathVariable Integer addressId)
 	{
+		LOGGER.info("AddressController : PostMapping : addAddress : Entry");
 		String msg=addressService.addAddress(addressDTO, addressId);
+		LOGGER.info("AddressController : PostMapping : addAddress : Exit");
 		return new ResponseEntity<String>(msg, HttpStatus.CREATED );
 	}
 	
 	@PutMapping(value = "/address/{localAddressId}")
 	public ResponseEntity<String> updateLocalAddress(@RequestBody UpdateLocalAddressDTO updateLocalAddressDTO, @PathVariable Integer localAddressId)
 	{
+		LOGGER.info("AddressController : PutMapping : updateLocalAddress : Entry");
 		String msg=addressService.updateLocalAddress(updateLocalAddressDTO, localAddressId);
+		LOGGER.info("AddressController : PutMapping : updateLocalAddress : Exit");
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 	
