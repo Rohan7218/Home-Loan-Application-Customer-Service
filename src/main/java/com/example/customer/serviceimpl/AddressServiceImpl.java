@@ -1,6 +1,8 @@
 package com.example.customer.serviceimpl;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ import com.example.customer.service.AddressService;
 @Service
 public class AddressServiceImpl implements AddressService
 {
+
+	private static final Logger LOGGER=LoggerFactory.getLogger(AddressServiceImpl.class);
+
+	
 	@Autowired
 	private LocalAddressRepository localAddressRepository;
 	
@@ -35,6 +41,7 @@ public class AddressServiceImpl implements AddressService
 	{
 		if(customerAddressRepository.findById(addressId).isPresent())
 		{
+			LOGGER.debug("AddressServiceImpl : addAddress : Entry");
 			LocalAddress localAddress = modelMapper.map(addressDTO, LocalAddress.class);
 			
 			PermanentAddress permanentAddress = modelMapper.map(addressDTO, PermanentAddress.class);
@@ -45,8 +52,10 @@ public class AddressServiceImpl implements AddressService
 										customerAddress.setAddressId(addressId);
 										
 			customerAddressRepository.save(customerAddress);
+			LOGGER.debug("AddressServiceImpl : addAddress : Exit");
 			return "Address Saved Succesfully";
 		}
+		LOGGER.debug("AddressServiceImpl : addAddress : Exit");
 			return null;
 	}
 	
@@ -55,6 +64,7 @@ public class AddressServiceImpl implements AddressService
 	{
 		if(localAddressRepository.findById(localAddressId).isPresent())
 		{
+			LOGGER.debug("AddressServiceImpl : updateLocalAddress : Entry");
 			LocalAddress localAddress = localAddressRepository.findById(localAddressId).get();
 			
 			if(updateLocalAddressDTO.getLocalAreaname()!=null)
@@ -87,10 +97,11 @@ public class AddressServiceImpl implements AddressService
 			}
 			
 			localAddressRepository.save(localAddress);
+			LOGGER.debug("AddressServiceImpl : updateLocalAddress : Exit");
 			return "Local Address Saved SuccessFully";
 			
 		}
-		
+		LOGGER.debug("AddressServiceImpl : updateLocalAddress : Exit");
 		return "Customer Not Found";
 	}
 }
