@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.example.customer.dto.CustomerGenderEnum;
+import com.example.customer.dto.CustomerMaritalStatus;
+import com.example.customer.dto.CustomerStatusEnum;
+import com.example.customer.dto.ExistingCustomerEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +42,9 @@ public class CustomerDetails
 
 	@Column(name = "First_Name")
 	private String firstName;
+	
+	@Column(name = "Middle_Name")
+	private String middleName;
 	
 	@Column(name = "Last_Name")
 	private String lastName;
@@ -66,11 +76,13 @@ public class CustomerDetails
 //=========================================================================
 	//Additional added Fields.
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "Existing_Customer")
-	private String existingCustomer;  		//Enum
+	private ExistingCustomerEnum existingCustomer;  		//Enum
 	
-	@Column(name = "Middle_Name")
-	private String middleName;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "Customer_Status")
+	private CustomerStatusEnum customerStatus;
 	
 	@Column(name = "Date_Of_Birth")
 	private LocalDate dateOfBirth;
@@ -78,8 +90,9 @@ public class CustomerDetails
 	@Column(name = "Age")
 	private Integer age;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "Gender")
-	private Integer gender;                    //Enum                              
+	private CustomerGenderEnum gender;                    //Enum                              
 	
 	@Column(name = "Alternativer_Contact_no")
 	private Long alternateContactNumber;
@@ -88,7 +101,7 @@ public class CustomerDetails
 	private String aadharNo;
 	
 	@Column(name="VoterId_Number")
-	private String votelIdNo;
+	private String voterIdNo;
 	
 	@Column(name = "Passport_Number")
 	private String passportNo;
@@ -96,8 +109,27 @@ public class CustomerDetails
 	@Column(name = "Driving_License_Number")
 	private String drivingLicenseNo;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name="Marital_Status")
-	private String maritalStatus;            //Enum
+	private CustomerMaritalStatus maritalStatus;            //Enum
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_AccountDetails_Id")
+	private BankAccountDetails accountId;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_Personal_DocumentId")
+	private AllPersonalDocs personalDocumentId;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Customer_AddressId")
+	private CustomerAddress customerAddressId;
+	
+	
+	
+	
+	
+	
 	
 	
 	
