@@ -37,12 +37,45 @@ public class DependentInfoServiceImpl implements DependentInfoService
 			
 		}
 
-		
+
 	
 	@Override
 	public String updateDepedentInfoDetails(UpdateDepedentInfoDTO updateDepedentInfoDTO, Integer dependentInfoId) {
 		
-		
+		if(dependentInfoRepository.existsById(dependentInfoId))
+		{
+			DependentInfo existDependentInfo = dependentInfoRepository.findById(dependentInfoId).get();
+			
+			if(updateDepedentInfoDTO.getDependentMember()!=null)
+			{
+				existDependentInfo.setDependentMember(updateDepedentInfoDTO.getDependentMember());
+			}
+			
+			if(updateDepedentInfoDTO.getFamilyIncome()!=null)
+			{
+				existDependentInfo.setFamilyIncome(updateDepedentInfoDTO.getFamilyIncome());
+			}
+			
+			if(updateDepedentInfoDTO.getMaritalStatus()!=null)
+			{
+				existDependentInfo.setMaritalStatus(updateDepedentInfoDTO.getMaritalStatus());
+			}
+			
+			if(updateDepedentInfoDTO.getNoOfChild()!=null)
+			{
+				existDependentInfo.setNoOfChild(updateDepedentInfoDTO.getNoOfChild());
+			}
+			
+			if(updateDepedentInfoDTO.getNoOfFamilyMember()!=null)
+			{
+				existDependentInfo.setNoOfFamilyMember(updateDepedentInfoDTO.getNoOfFamilyMember());
+			}
+			
+			dependentInfoRepository.save(existDependentInfo);
+			
+			return "Depedent Info of Customer updated Suceesfully";
+			
+		}
 		return null;
 	}
 
