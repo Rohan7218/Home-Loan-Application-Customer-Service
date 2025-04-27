@@ -127,11 +127,5 @@ public class CustomerDetails
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
+
 }
