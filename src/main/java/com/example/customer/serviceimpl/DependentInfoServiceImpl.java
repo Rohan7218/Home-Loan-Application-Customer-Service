@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.customer.dto.DependentInfoDTO;
+import com.example.customer.dto.UpdateDepedentInfoDTO;
 import com.example.customer.entity.CustomerDetails;
 import com.example.customer.entity.DependentInfo;
 import com.example.customer.repository.CustomerRepository;
@@ -35,6 +36,16 @@ public class DependentInfoServiceImpl implements DependentInfoService
 			
 			
 		}
+
+		
+	
+	@Override
+	public String updateDepedentInfoDetails(UpdateDepedentInfoDTO updateDepedentInfoDTO, Integer dependentInfoId) {
+		
+		
+		return null;
+	}
+
 		
 		
 	}
