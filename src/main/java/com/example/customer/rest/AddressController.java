@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customer.dto.AddressDTO;
 import com.example.customer.dto.UpdateLocalAddressDTO;
+import com.example.customer.response.ApiResponse;
 import com.example.customer.service.AddressService;
 
 @RestController
@@ -28,21 +29,23 @@ public class AddressController {
 	
 
 	@PostMapping(value = "/address/{addressId}")
-	public ResponseEntity<String>addAddress(@RequestBody AddressDTO addressDTO, @PathVariable Integer addressId)
+	public ResponseEntity<ApiResponse<String>>addAddress(@RequestBody AddressDTO addressDTO, @PathVariable Integer addressId)
 	{
 		LOGGER.info("AddressController : PostMapping : addAddress : Entry");
 		String msg=addressService.addAddress(addressDTO, addressId);
+		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
 		LOGGER.info("AddressController : PostMapping : addAddress : Exit");
-		return new ResponseEntity<String>(msg, HttpStatus.CREATED );
+		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED );
 	}
 	
 	@PutMapping(value = "/address/{localAddressId}")
-	public ResponseEntity<String> updateLocalAddress(@RequestBody UpdateLocalAddressDTO updateLocalAddressDTO, @PathVariable Integer localAddressId)
+	public ResponseEntity<ApiResponse<String>> updateLocalAddress(@RequestBody UpdateLocalAddressDTO updateLocalAddressDTO, @PathVariable Integer localAddressId)
 	{
 		LOGGER.info("AddressController : PutMapping : updateLocalAddress : Entry");
 		String msg=addressService.updateLocalAddress(updateLocalAddressDTO, localAddressId);
+		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
 		LOGGER.info("AddressController : PutMapping : updateLocalAddress : Exit");
-		return new ResponseEntity<String>(msg, HttpStatus.OK);
+		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.OK);
 	}
 	
 }
