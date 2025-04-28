@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customer.dto.BankAccountDto;
+import com.example.customer.response.ApiResponse;
 import com.example.customer.service.CustomerBankAccountService;
 
 @RestController
@@ -25,12 +26,13 @@ public class CustomerBankAccountController
 	private CustomerBankAccountService customerBankAccountService;
 	
 	@PostMapping(value = "/{accountId}")
-	public ResponseEntity<String> addCustomerBankAccount(@RequestBody BankAccountDto bankAccountDto,@PathVariable Integer  accountId)
+	public ResponseEntity<ApiResponse<String>> addCustomerBankAccount(@RequestBody BankAccountDto bankAccountDto,@PathVariable Integer  accountId)
 	{
 		LOGGER.info("CustomerBankAccountController : PostMapping : addCustomerBankAccount : Entry");
 		String msg=customerBankAccountService.addCustomerBankAccount(bankAccountDto, accountId);
 		LOGGER.info("CustomerBankAccountController : PostMapping : addCustomerBankAccount : Exit");
-		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
+		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 	}
 	
 	
