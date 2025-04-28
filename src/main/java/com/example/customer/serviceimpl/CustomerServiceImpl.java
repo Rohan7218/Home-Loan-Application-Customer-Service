@@ -80,7 +80,6 @@ public class CustomerServiceImpl implements CustomerService {
 				allPersonalDocsRepository.save(allPersonalDocs);
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			LOGGER.debug("CustomerServiceImpl : uploadDocuments : Exit");
