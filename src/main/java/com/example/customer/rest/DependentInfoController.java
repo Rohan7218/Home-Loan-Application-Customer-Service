@@ -16,7 +16,7 @@ import com.example.customer.dto.DependentInfoDTO;
 
 
 import com.example.customer.dto.UpdateDepedentInfoDTO;
-
+import com.example.customer.response.ApiResponse;
 import com.example.customer.service.DependentInfoService;
 
 @RestController
@@ -30,22 +30,25 @@ public class DependentInfoController
 	private DependentInfoService dependentInfoService;
 	
 	@PostMapping(value = "/dependents/{customerId}")
-	public ResponseEntity<String> addDependentInfo(@RequestBody DependentInfoDTO dependentInfoDTO, @PathVariable Integer customerId)
+	public ResponseEntity<ApiResponse<String>> addDependentInfo(@RequestBody DependentInfoDTO dependentInfoDTO, @PathVariable Integer customerId)
 	{
 		LOGGER.info("DependentInfoController : PostMapping : addDependentInfo : Entry");
 		String msg=dependentInfoService.addDependentInfo(dependentInfoDTO, customerId);
 		LOGGER.info("DependentInfoController : PostMapping : addDependentInfo : Exit");
-
-		return new ResponseEntity<String>(msg, HttpStatus.CREATED);
+		
+		ApiResponse<String> apiResponce=new ApiResponse<String>(msg);
+		return new ResponseEntity<ApiResponse<String>>(apiResponce, HttpStatus.CREATED);
 	}
 	
 	
 	@PutMapping(value = "/dependents/{dependentInfoId}")
-	public ResponseEntity<String> updateDepedentInfoDetails(@RequestBody UpdateDepedentInfoDTO updateDepedentInfoDTO,@PathVariable Integer dependentInfoId) 
+	public ResponseEntity<ApiResponse<String>> updateDepedentInfoDetails(@RequestBody UpdateDepedentInfoDTO updateDepedentInfoDTO,@PathVariable Integer dependentInfoId) 
 	{
 		LOGGER.info("DependentInfoController : PutMapping : updateDepedentInfoDetails : Entry");
 		String msg=dependentInfoService.updateDepedentInfoDetails(updateDepedentInfoDTO,dependentInfoId);
 		LOGGER.info("DependentInfoController : PutMapping : updateDepedentInfoDetails : Exit");
-		return new ResponseEntity<String>(msg, HttpStatus.OK);
+		
+		ApiResponse<String> apiResponce=new ApiResponse<String>(msg);
+		return new ResponseEntity<ApiResponse<String>>(apiResponce, HttpStatus.OK);
 	}
 }
