@@ -1,6 +1,7 @@
 package com.example.customer.serviceimpl;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -9,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.customer.config.MailApiFeignClient;
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.dto.CustomerMailDto;
 import com.example.customer.dto.CustomerStatusEnum;
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
@@ -19,6 +22,7 @@ import com.example.customer.entity.BankAccountDetails;
 import com.example.customer.entity.CibilDetails;
 import com.example.customer.entity.CustomerAddress;
 import com.example.customer.entity.CustomerDetails;
+import com.example.customer.entity.CustomerMailParameterDto;
 import com.example.customer.exceptionhandling.NoCustomerFoundException;
 import com.example.customer.exceptionhandling.NoCustomersFoundException;
 import com.example.customer.repository.AllPersonalDocsRepository;
@@ -38,28 +42,57 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private MailApiFeignClient mailApiFeignClient;
 
 	@Override
-	public String addCustomer(CustomerDetails customerDetails) {
-		
+	public String addCustomer(CustomerDetails customerDetails) 
+	{	
 		LOGGER.debug("CustomerServiceImpl : addCustomer : Entry");
 		CibilDetails cibilDetails = new CibilDetails();
-		cibilDetails.setCibilEligibility(customerDetails.getCibilId().getCibilEligibility());
-		cibilDetails.setCibilScore(customerDetails.getCibilId().getCibilScore());
-		cibilDetails.setCibilRemark(customerDetails.getCibilId().getCibilRemark());
-		cibilDetails.setPanCardNo(customerDetails.getPanCardNo());
+						  cibilDetails.setCibilEligibility(customerDetails.getCibilId().getCibilEligibility());
+						  cibilDetails.setCibilScore(customerDetails.getCibilId().getCibilScore());
+						  cibilDetails.setCibilRemark(customerDetails.getCibilId().getCibilRemark());
+						  cibilDetails.setPanCardNo(customerDetails.getPanCardNo());
 
 		customerDetails.setCibilId(cibilDetails);
 
 		CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
 								  customerDetailsSaved.setCustomerStatus(CustomerStatusEnum.INPROCESS);
-								  cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
+								  customerDetailsSaved.setPassword(generatePassword());
+		
+		cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
 								  
 		customerRepository.save(customerDetailsSaved);
+		
+		CustomerMailParameterDto customerMailParameterDto = modelMapper.map(customerDetailsSaved, CustomerMailParameterDto.class);
+		
+		CustomerMailDto customerMailDto=new CustomerMailDto();
+									customerMailDto.setTo(customerDetailsSaved.getEmailId());
+									customerMailDto.setSubject("You Are Eligible to Proceed with Your Home Loan – Unified Home Loan Pvt Ltd");
+									customerMailDto.setFileName("CustomerMailFormat.txt");
+									customerMailDto.setCustomerMailParameterDto(customerMailParameterDto);
 
+		mailApiFeignClient.customerMail(customerMailDto);
+		
 		LOGGER.debug("CustomerServiceImpl : addCustomer : Exit");
 		return "!!!!....Customer Saved SuccessFully....!!!!";
 	}
+	
+	public static String generatePassword() 
+	{
+		  String charecter ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		  int password_Length = 8;
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder(password_Length);
+
+        for (int i = 0; i < password_Length; i++) {
+            int index = random.nextInt(charecter.length());
+            password.append(charecter.charAt(index));
+        }
+        return password.toString();
+    }
 
 	@Override
 	public String uploadDocuments(CustomerDocumentDTO customerDocumentDTO, Integer personalDocumentId) {
