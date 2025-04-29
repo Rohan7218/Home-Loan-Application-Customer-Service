@@ -109,6 +109,9 @@ public class CustomerDetails
 	@Column(name = "Driving_License_Number")
 	private String drivingLicenseNo;
 	
+	@Column(name = "Password")
+	private String password;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="Marital_Status")
 	private CustomerMaritalStatus maritalStatus;            //Enum
