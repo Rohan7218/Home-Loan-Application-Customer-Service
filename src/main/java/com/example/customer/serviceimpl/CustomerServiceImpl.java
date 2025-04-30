@@ -14,6 +14,7 @@ import com.example.customer.config.MailApiFeignClient;
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
 import com.example.customer.dto.CustomerMailDto;
+import com.example.customer.dto.CustomerStatusDTO;
 import com.example.customer.dto.CustomerStatusEnum;
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
@@ -253,7 +254,19 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	
 	
-	
+	@Override
+	public String updateCustomerStatus(CustomerStatusDTO customerStatusDTO, Integer customerId) 
+	{	
+		if(customerRepository.findById(customerId).isPresent()) 
+		{
+				CustomerDetails customerDetails	=customerRepository.findById(customerId).get();
+				customerDetails.setCustomerStatus(customerStatusDTO.getCustomerStatus());
+				customerRepository.save(customerDetails);
+				return "!!!...Customer Status Changed Successfully...!!!";
+		}
+		
+		return null;
+	}
 	
 	
 	
