@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.dto.CustomerStatusDTO;
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
 import com.example.customer.entity.CustomerDetails;
@@ -29,6 +30,8 @@ public interface CustomerService {
 	getCustomerDetailsDTO getCustomerDetails(Integer customerId);
 
 	List<CustomerDetails> getAllCustomerDetails();
+
+	String updateCustomerStatus(CustomerStatusDTO customerStatusDTO, Integer customerId);
 
 
 }
