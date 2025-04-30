@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
+import com.example.customer.dto.CustomerStatusDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.entity.CustomerDetails;
@@ -30,10 +31,9 @@ import com.example.customer.service.CustomerService;
 @RestController
 @RequestMapping(value = "/api/customers")
 public class CustomerController {
-	
-	private static final Logger LOGGER=LoggerFactory.getLogger(CustomerController.class);
 
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -42,8 +42,8 @@ public class CustomerController {
 		LOGGER.info("CustomerController : PostMapping : addCustomer : Entry");
 		String msg = customerService.addCustomer(customerDetails);
 		LOGGER.info("CustomerController : PostMapping : addCustomer : Exit");
-		
-		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+
+		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 	}
 
@@ -52,8 +52,8 @@ public class CustomerController {
 			@PathVariable Integer personalDocumentId) {
 		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Entry");
 		String msg = customerService.uploadDocuments(customerDocumentDTO, personalDocumentId);
-		
-		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+
+		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
 		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Exit");
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 	}
@@ -64,8 +64,8 @@ public class CustomerController {
 			@PathVariable Integer customerId) {
 		LOGGER.info("CustomerController : PostMapping : addAdditionalCustomerDetails : Entry");
 		String msg = customerService.addAdditionalCustomerDetails(additionalCustomerDetailsDTO, customerId);
-		
-		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+
+		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
 		LOGGER.info("CustomerController : PostMapping : addAdditionalCustomerDetails : Exit");
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 
@@ -76,7 +76,7 @@ public class CustomerController {
 
 		LOGGER.info("CustomerController : GetMapping : getCustomerDetails : Entry");
 		getCustomerDetailsDTO getCustomer = customerService.getCustomerDetails(customerId);
-		ApiResponse<Object> apiResponse=new ApiResponse<Object>(getCustomer);
+		ApiResponse<Object> apiResponse = new ApiResponse<Object>(getCustomer);
 		LOGGER.info("CustomerController : GetMapping : getCustomerDetails : Exit");
 		return new ResponseEntity<ApiResponse<Object>>(apiResponse, HttpStatus.OK);
 
@@ -88,26 +88,39 @@ public class CustomerController {
 		LOGGER.info("CustomerController : GetMapping : getAllCustomerDetails : Entry");
 		List<CustomerDetails> getAllCustomers = customerService.getAllCustomerDetails();
 
-		if (!getAllCustomers.isEmpty())
-		{
+		if (!getAllCustomers.isEmpty()) {
 			LOGGER.info("CustomerController : GetMapping : getAllCustomerDetails : Exit");
-			ApiResponse<Object> apiResponse=new ApiResponse<Object>(getAllCustomers);
+			ApiResponse<Object> apiResponse = new ApiResponse<Object>(getAllCustomers);
 			return new ResponseEntity<ApiResponse<Object>>(apiResponse, HttpStatus.OK);
-		} 
-		else
-		{
+		} else {
 			LOGGER.info("CustomerController : GetMapping : getAllCustomerDetails : Exit");
 			return new ResponseEntity<ApiResponse<Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@PutMapping(value = "/updateCustomerDetails/{customerId}")
-	public ResponseEntity<ApiResponse<String>> updateCustomerDetails(@RequestBody UpdateCustomerDetailsDTO updateCustomerDetailsDTO,@PathVariable Integer customerId)
-	{
+	public ResponseEntity<ApiResponse<String>> updateCustomerDetails(
+			@RequestBody UpdateCustomerDetailsDTO updateCustomerDetailsDTO, @PathVariable Integer customerId) {
 		LOGGER.info("CustomerController : PutMapping : updateCustomerDetails : Entry");
-		String msg=customerService.updateCustomerDetails(updateCustomerDetailsDTO,customerId);
+		String msg = customerService.updateCustomerDetails(updateCustomerDetailsDTO, customerId);
 		LOGGER.info("CustomerController : PutMapping : updateCustomerDetails : Exit");
-		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.OK);
-  }
+	}
+
+	@PatchMapping(value = "/updateCustomerStatus/{customerId}")
+	public ResponseEntity<ApiResponse<String>> updateCustomerStatus(@RequestBody CustomerStatusDTO customerStatusDTO,
+			@PathVariable Integer customerId) 
+	{
+		LOGGER.info("CustomerController : PatchMapping : updateCustomerStatus : Entry");
+		String msg = customerService.updateCustomerStatus(customerStatusDTO, customerId);
+		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
+		if (msg != null) {
+			return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.OK);
+		} else {
+			LOGGER.info("CustomerController : PatchMapping : updateCustomerStatus : Exit");
+			return new ResponseEntity<ApiResponse<String>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }
