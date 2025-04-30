@@ -1,6 +1,5 @@
 package com.example.customer.dto;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
