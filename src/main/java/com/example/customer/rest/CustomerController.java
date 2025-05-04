@@ -38,7 +38,8 @@ public class CustomerController {
 	private CustomerService customerService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<String>> addCustomer(@RequestBody CustomerDetails customerDetails) {
+	public ResponseEntity<ApiResponse<String>> addCustomer(@RequestBody CustomerDetails customerDetails) 
+	{
 		LOGGER.info("CustomerController : PostMapping : addCustomer : Entry");
 		String msg = customerService.addCustomer(customerDetails);
 		LOGGER.info("CustomerController : PostMapping : addCustomer : Exit");
@@ -46,18 +47,7 @@ public class CustomerController {
 		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 	}
-
-	@PostMapping(value = "/documents/{personalDocumentId}")
-	public ResponseEntity<ApiResponse<String>> uploadDocuments(@ModelAttribute CustomerDocumentDTO customerDocumentDTO,
-			@PathVariable Integer personalDocumentId) {
-		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Entry");
-		String msg = customerService.uploadDocuments(customerDocumentDTO, personalDocumentId);
-
-		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
-		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Exit");
-		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
-	}
-
+	
 	@PostMapping(value = "/addAdditionalDetails/{customerId}")
 	public ResponseEntity<ApiResponse<String>> addAdditionalCustomerDetails(
 			@RequestBody @Valid AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO,
@@ -69,6 +59,17 @@ public class CustomerController {
 		LOGGER.info("CustomerController : PostMapping : addAdditionalCustomerDetails : Exit");
 		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 
+	}
+
+	@PostMapping(value = "/documents/{personalDocumentId}")
+	public ResponseEntity<ApiResponse<String>> uploadDocuments(@ModelAttribute CustomerDocumentDTO customerDocumentDTO,
+			@PathVariable Integer personalDocumentId) {
+		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Entry");
+		String msg = customerService.uploadDocuments(customerDocumentDTO, personalDocumentId);
+
+		ApiResponse<String> apiResponse = new ApiResponse<String>(msg);
+		LOGGER.info("CustomerController : PostMapping : uploadDocuments : Exit");
+		return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/getCustomer/{customerId}")

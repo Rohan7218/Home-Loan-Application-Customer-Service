@@ -81,6 +81,43 @@ public class CustomerServiceImpl implements CustomerService {
 		return "!!!!....Customer Saved SuccessFully....!!!!";
 	}
 	
+	@Override
+	public String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO,
+			Integer customerId) {
+
+		if (customerRepository.findById(customerId).isPresent())
+		{
+			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Entry");
+			
+			CustomerAddress customerAddress = new CustomerAddress();
+			AllPersonalDocs allPersonalDocs = new AllPersonalDocs();
+			BankAccountDetails bankAccountDetails = new BankAccountDetails();
+
+			CustomerDetails customerDetails = customerRepository.findById(customerId).get();
+									  customerDetails.setAadharNo(additionalCustomerDetailsDTO.getAadharNo());
+									  customerDetails.setAge(additionalCustomerDetailsDTO.getAge());
+									  long altContact = Long.parseLong(additionalCustomerDetailsDTO.getAlternateContactNumber());
+									  customerDetails.setAlternateContactNumber(altContact);
+									  customerDetails.setDateOfBirth(additionalCustomerDetailsDTO.getDateOfBirth());
+									  customerDetails.setDrivingLicenseNo(additionalCustomerDetailsDTO.getDrivingLicenseNo());
+									  customerDetails.setExistingCustomer(additionalCustomerDetailsDTO.getExistingCustomer());
+									  customerDetails.setGender(additionalCustomerDetailsDTO.getGender());
+									  customerDetails.setMaritalStatus(additionalCustomerDetailsDTO.getMaritalStatus());
+									  customerDetails.setPassportNo(additionalCustomerDetailsDTO.getPassportNo());
+									  customerDetails.setVoterIdNo(additionalCustomerDetailsDTO.getVoterIdNo());
+									  
+									  customerDetails.setCustomerAddressId(customerAddress);
+									  customerDetails.setPersonalDocumentId(allPersonalDocs);
+									  customerDetails.setAccountId(bankAccountDetails);
+
+			customerRepository.save(customerDetails);
+			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
+			return "Additional Customer Details Added Successfully";
+		}
+		LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
+		return "Customer Id Not Exist given ID " + customerId;
+	}
+	
 	public static String generatePassword() 
 	{
 		  String charecter ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -124,40 +161,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	}
 
-	@Override
-	public String addAdditionalCustomerDetails(AdditionalCustomerDetailsDTO additionalCustomerDetailsDTO,
-			Integer customerId) {
-
-		if (customerRepository.findById(customerId).isPresent())
-		{
-			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Entry");
-			CustomerAddress customerAddress = new CustomerAddress();
-			AllPersonalDocs allPersonalDocs = new AllPersonalDocs();
-			BankAccountDetails bankAccountDetails = new BankAccountDetails();
-
-			CustomerDetails customerDetails = customerRepository.findById(customerId).get();
-			customerDetails.setAadharNo(additionalCustomerDetailsDTO.getAadharNo());
-			customerDetails.setAge(additionalCustomerDetailsDTO.getAge());
-			long altContact = Long.parseLong(additionalCustomerDetailsDTO.getAlternateContactNumber());
-			customerDetails.setAlternateContactNumber(altContact);
-			customerDetails.setDateOfBirth(additionalCustomerDetailsDTO.getDateOfBirth());
-			customerDetails.setDrivingLicenseNo(additionalCustomerDetailsDTO.getDrivingLicenseNo());
-			customerDetails.setExistingCustomer(additionalCustomerDetailsDTO.getExistingCustomer());
-			customerDetails.setGender(additionalCustomerDetailsDTO.getGender());
-			customerDetails.setMaritalStatus(additionalCustomerDetailsDTO.getMaritalStatus());
-			customerDetails.setPassportNo(additionalCustomerDetailsDTO.getPassportNo());
-			customerDetails.setVoterIdNo(additionalCustomerDetailsDTO.getVoterIdNo());
-			customerDetails.setCustomerAddressId(customerAddress);
-			customerDetails.setPersonalDocumentId(allPersonalDocs);
-			customerDetails.setAccountId(bankAccountDetails);
-
-			customerRepository.save(customerDetails);
-			LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
-			return "Additional Customer Details Added Successfully";
-		}
-		LOGGER.debug("CustomerServiceImpl : addAdditionalCustomerDetails : Exit");
-		return "Customer Id Not Exist given ID " + customerId;
-	}
+	
 
 	@Override
 	public getCustomerDetailsDTO getCustomerDetails(Integer customerId) {
