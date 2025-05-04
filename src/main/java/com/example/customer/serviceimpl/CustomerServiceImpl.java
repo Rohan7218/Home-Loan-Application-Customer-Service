@@ -10,12 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.customer.config.LoanApplicantionApiFeignClient;
 import com.example.customer.config.MailApiFeignClient;
 import com.example.customer.dto.AdditionalCustomerDetailsDTO;
 import com.example.customer.dto.CustomerDocumentDTO;
 import com.example.customer.dto.CustomerMailDto;
 import com.example.customer.dto.CustomerStatusDTO;
 import com.example.customer.dto.CustomerStatusEnum;
+import com.example.customer.dto.LoanApplicantionCustomerIdDTO;
 import com.example.customer.dto.UpdateCustomerDetailsDTO;
 import com.example.customer.dto.getCustomerDetailsDTO;
 import com.example.customer.entity.AllPersonalDocs;
@@ -46,6 +48,9 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
 	private MailApiFeignClient mailApiFeignClient;
+	
+	@Autowired
+	private LoanApplicantionApiFeignClient loanApplicantionApiFeignClient;
 
 	@Override
 	public String addCustomer(CustomerDetails customerDetails) 
@@ -264,8 +269,16 @@ public class CustomerServiceImpl implements CustomerService {
 		if(customerRepository.findById(customerId).isPresent()) 
 		{
 				CustomerDetails customerDetails	=customerRepository.findById(customerId).get();
-				customerDetails.setCustomerStatus(customerStatusDTO.getCustomerStatus());
+										  customerDetails.setCustomerStatus(customerStatusDTO.getCustomerStatus());
+										  
 				customerRepository.save(customerDetails);
+				if(customerDetails.getCustomerStatus().equals(CustomerStatusEnum.VERIFIED))
+				{
+					LoanApplicantionCustomerIdDTO loanApplicantionCustomerIdDTO=new LoanApplicantionCustomerIdDTO();
+																		loanApplicantionCustomerIdDTO.setCustomerId(customerDetails.getCustomerId());		
+																		
+					loanApplicantionApiFeignClient.addApplicantDetailsService(loanApplicantionCustomerIdDTO);
+				}
 				return "!!!...Customer Status Changed Successfully...!!!";
 		}
 		

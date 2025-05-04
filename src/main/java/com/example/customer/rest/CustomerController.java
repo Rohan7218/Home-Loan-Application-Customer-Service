@@ -116,9 +116,12 @@ public class CustomerController {
 		LOGGER.info("CustomerController : PatchMapping : updateCustomerStatus : Entry");
 		String msg = customerService.updateCustomerStatus(customerStatusDTO, customerId);
 		ApiResponse<String> apiResponse=new ApiResponse<String>(msg);
-		if (msg != null) {
+		if (msg != null) 
+		{
 			return new ResponseEntity<ApiResponse<String>>(apiResponse, HttpStatus.OK);
-		} else {
+		} 
+		else
+		{
 			LOGGER.info("CustomerController : PatchMapping : updateCustomerStatus : Exit");
 			return new ResponseEntity<ApiResponse<String>>(HttpStatus.BAD_REQUEST);
 		}
