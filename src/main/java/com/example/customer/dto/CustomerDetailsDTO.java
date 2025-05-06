@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class CustomerDetailsDTO
 {
-
-
 	private String emailId;
 
 	private Long contactNo;
