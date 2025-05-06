@@ -72,7 +72,7 @@ public class CustomerDetails
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Customer_Cibil_Id")
 	private CibilDetails cibilId;
-	
+		
 //=========================================================================
 	//Additional added Fields.
 	
