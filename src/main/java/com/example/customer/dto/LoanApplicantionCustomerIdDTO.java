@@ -6,4 +6,6 @@ import lombok.Data;
 public class LoanApplicantionCustomerIdDTO
 {
 	private Integer customerId;
+	
+	private Integer cibilScore;
 }
