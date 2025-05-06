@@ -61,12 +61,15 @@ public class CustomerServiceImpl implements CustomerService {
 						  cibilDetails.setCibilScore(customerDetails.getCibilId().getCibilScore());
 						  cibilDetails.setCibilRemark(customerDetails.getCibilId().getCibilRemark());
 						  cibilDetails.setPanCardNo(customerDetails.getPanCardNo());
+	
+						 
 
 		customerDetails.setCibilId(cibilDetails);
 
 		CustomerDetails customerDetailsSaved = customerRepository.save(customerDetails);
 								  customerDetailsSaved.setCustomerStatus(CustomerStatusEnum.INPROCESS);
 								  customerDetailsSaved.setPassword(generatePassword());
+						
 		
 		cibilDetails.setCustomerId(customerDetailsSaved.getCustomerId());
 								  
@@ -275,7 +278,8 @@ public class CustomerServiceImpl implements CustomerService {
 				if(customerDetails.getCustomerStatus().equals(CustomerStatusEnum.VERIFIED))
 				{
 					LoanApplicantionCustomerIdDTO loanApplicantionCustomerIdDTO=new LoanApplicantionCustomerIdDTO();
-																		loanApplicantionCustomerIdDTO.setCustomerId(customerDetails.getCustomerId());		
+																		loanApplicantionCustomerIdDTO.setCustomerId(customerDetails.getCustomerId());	
+																		loanApplicantionCustomerIdDTO.setCibilScore(customerDetails.getCibilId().getCibilScore());
 																		
 					loanApplicantionApiFeignClient.addApplicantDetailsService(loanApplicantionCustomerIdDTO);
 				}
