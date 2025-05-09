@@ -8,4 +8,6 @@ public class LoanApplicantionCustomerIdDTO
 	private Integer customerId;
 	
 	private Integer cibilScore;
+	
+	private String emailId;
 }
