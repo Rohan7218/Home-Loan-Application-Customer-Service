@@ -280,6 +280,7 @@ public class CustomerServiceImpl implements CustomerService {
 					LoanApplicantionCustomerIdDTO loanApplicantionCustomerIdDTO=new LoanApplicantionCustomerIdDTO();
 																		loanApplicantionCustomerIdDTO.setCustomerId(customerDetails.getCustomerId());	
 																		loanApplicantionCustomerIdDTO.setCibilScore(customerDetails.getCibilId().getCibilScore());
+																		loanApplicantionCustomerIdDTO.setEmailId(customerDetails.getEmailId());
 																		
 					loanApplicantionApiFeignClient.addApplicantDetailsService(loanApplicantionCustomerIdDTO);
 				}
